@@ -77,6 +77,7 @@ $B$ is a set of all points on the pore's boundary. We define a new pore shape
 parameter $p$, called ``\highlight{awesomeness}'', using \ref{eq:intro}:
 \begin{equation}
   p = \inf \{p_{AB} \ \forall (A, B) \in B^2\}
+  \label{eq:awesomeness}
 \end{equation}
 Obviously, it's unlikely that $p$ = $p_{AC}$ because $L_{AC} \approx \rho_{AC}$.
 It's easy to see that $0 \le p \le 1$ because $0 \le \rho_{AB} \le L_{AB}$ for
@@ -300,7 +301,7 @@ degenerate shapes in the form of line segments. The biggest value for
 non-degenerate shapes is reached for a disk and equals to $2/\pi$.
 
 \section{Results}
-We computed \highlight{awesomness} for 4000 synthetically generated images with
+We computed \highlight{awesomeness} for 4000 synthetically generated images with
 dimensions $1000 \times 1000$ pixels (1000 images from 4 different
 datasets). The datasets have the following properties:
 \begin{itemize}
@@ -312,7 +313,7 @@ datasets). The datasets have the following properties:
 \end{itemize}
 Figure \ref{fig:pores} depicts a pore from each dataset.
 \begin{figure}
-    \centering
+  \centering
   \subfigure[\texttt{normal}]{
     \includegraphics[width=0.4\linewidth]{images/normal.png}}
   \subfigure[\texttt{thin}]{
@@ -327,8 +328,87 @@ Figure \ref{fig:pores} depicts a pore from each dataset.
   \label{fig:pores}
 \end{figure}
 
-\section{Comparison with other parameters}
-\highlight{CEA vs CER}.
+Summarly 3901 images out of 4000 (97.5\%) were good enough for \texttt{sort} to
+sort boundary points in pores. For these images we also computed commonly used
+convexity and elongation parameters. On \cref{fig:cae-space} each pore is
+represented as a dot in convexity-elongation-\highlight{awesomeness} (CEA)
+space.
+\begin{figure*}
+  \centering
+  \subfigure[Convexity-elongation-\highlight{awesomeness} space]{
+    \includegraphics[width=0.4\linewidth]{images/cae.png}
+    \label{fig:cae-space}}
+  \hfill
+  \subfigure[Convexity-elongation-roundness space]{
+    \includegraphics[width=0.4\linewidth]{images/cer.png}
+    \label{fig:cer-space}}
+  \vskip\baselineskip
+  \subfigure[Elongation-\highlight{Awesomeness} space]{
+    \includegraphics[width=0.4\linewidth]{images/ae.png}
+    \label{fig:ae-space}}
+  \hfill
+  \subfigure[Convexity-elongation-\highlight{improved awesomeness} space]{
+    \includegraphics[width=0.4\linewidth]{images/caei.png}
+    \label{fig:caei-space}}
+  \caption[]{Synthetically generated pores shown as points in different
+    parameter spaces.}
+  \label{fig:parameter-spaces}
+\end{figure*}
+
+It can be seen that if a pore has low convexity ($< 0.6$)
+\highlight{awesomeness} adds no information to the pore's descriptors because it
+stays relatively low for all pores. When, however, the convexity is high it adds
+a new dimension to the parameter space. \highlight{Awesomeness} also correlates
+with elongation, but this correlation can be reduced. Remember, that a disk has
+the biggest known \highlight{awesomeness}. Similarly, an ellipse defined as
+\begin{equation*}
+  \frac{x^2}{a^2} + \frac{y^2}{b^2} = 1
+\end{equation*}
+has the biggest known \highlight{awesomeness} from all shapes with elongation
+$E = a / b$ (suppose $a \le b$) (see \cref{fig:ae-space}). Using Ramanujan's
+formular for the perimeter of an ellipse we get
+\begin{equation*}
+  p \le p_{ellipse} = \frac{2a}{P/2} \approx \frac{4E}{\pi[3(1+E) - \sqrt{(3E+1)(E+3)}]}
+\end{equation*}
+By dividing \highlight{awesomeness} by $p_{ellipse}$ we obtain an improved
+parameter $p'$:
+\begin{equation}
+  p' = \frac{\pi p [3(1+E) - \sqrt{(3E+1)(E+3)}]}{4E}
+  \label{eq:improved-awesomeness}
+\end{equation}
+Indeed, on \cref{fig:caei-space} we see that improved awesomeness is less
+correlated with elongation.
+
+Another common parameter for describing pore shapes is roundness. Figure
+\ref{fig:cer-space} features convexity-elongation-roundness (CER) space.
+It can be seen that roundness-convexity correlation is bigger than
+awesomeness-convexity correlation. All correlation values are in
+\cref{tab:correlations}.
+\begin{table*}[!htp]
+  \centering
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    & Awesomeness & Elongation & Convexity & Roundness \\
+    \hline
+    Awesomeness & 1 & 0.049 & 0.557 & 0.745 \\
+    \hline
+    Elongation & & 1 & 0.457 & 0.355 \\
+    \hline
+    Convexity &&& 1 & 0.922 \\
+    \hline
+    Roundness &&&& 1 \\
+    \hline
+  \end{tabular}
+  \caption{Correlation between shape describing parameters.}
+  \label{tab:correlations}
+\end{table*}
+
+To test abilities of the awesomeness parameter we now divide our pores in groups
+with different convexity. The first group has pores with convexity $0.55 \le C < 0.65$,
+the second -- $0.65 \le C < 0.75$, the third -- $0.75 \le C < 0.85$ and the fourth
+-- $0.85 \le C < 0.95$. Five images with the biggest awesomeness and five images
+with the smallest awesomeness from each group are shown on \highlight{image
+  number 100500}.
 
 \bibliography{paper}
 \end{document}
