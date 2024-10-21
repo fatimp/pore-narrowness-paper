@@ -407,8 +407,55 @@ To test abilities of the awesomeness parameter we now divide our pores in groups
 with different convexity. The first group has pores with convexity $0.55 \le C < 0.65$,
 the second -- $0.65 \le C < 0.75$, the third -- $0.75 \le C < 0.85$ and the fourth
 -- $0.85 \le C < 0.95$. Five images with the biggest awesomeness and five images
-with the smallest awesomeness from each group are shown on \highlight{image
-  number 100500}.
+with the smallest awesomeness from each group are shown on
+\cref{fig:convexity-groups-score}. It can be clearly seen that pores with higher
+values of \highlight{awesomeness} are more ``solid'' and more finely
+clusterized.
+
+For comparison, we do the same sorting across groups for roundness
+parameter. The results are on
+\cref{fig:convexity-groups-roundness}. Well-clusterized pores have the biggest
+roundness for convexity $C > 0.8$. For lower convexity, however, even pores with
+the biggest roundness in the group are also underclusterized while
+\highlight{awesomeness} parameter is capable of separating well-clusterized and
+underclusterized pores.
+\begin{figure*}
+  \centering
+  \subfigure[$0.55 \le C < 0.65$]{
+    \includegraphics[width=0.4\linewidth]{images/groups-score-0.60.png}}
+  \hfill
+  \subfigure[$0.65 \le C < 0.75$]{
+    \includegraphics[width=0.4\linewidth]{images/groups-score-0.70.png}}
+  \vskip\baselineskip
+  \subfigure[$0.75 \le C < 0.85$]{
+    \includegraphics[width=0.4\linewidth]{images/groups-score-0.80.png}}
+  \hfill
+  \subfigure[$0.85 \le C < 0.95$]{
+    \includegraphics[width=0.4\linewidth]{images/groups-score-0.90.png}}
+  \caption[]{Pores divided into groups by their convexity. Upper row of each
+    subfigure: pores with minimal \highlight{awesomeness} in the group, lower
+    row: pores with maximal \highlight{awesomeness} in the group.}
+  \label{fig:convexity-groups-score}
+\end{figure*}
+
+\begin{figure*}
+  \centering
+  \subfigure[$0.55 \le C < 0.65$]{
+    \includegraphics[width=0.4\linewidth]{images/groups-sphericity-0.60.png}}
+  \hfill
+  \subfigure[$0.65 \le C < 0.75$]{
+    \includegraphics[width=0.4\linewidth]{images/groups-sphericity-0.70.png}}
+  \vskip\baselineskip
+  \subfigure[$0.75 \le C < 0.85$]{
+    \includegraphics[width=0.4\linewidth]{images/groups-sphericity-0.80.png}}
+  \hfill
+  \subfigure[$0.85 \le C < 0.95$]{
+    \includegraphics[width=0.4\linewidth]{images/groups-sphericity-0.90.png}}
+  \caption[]{Pores divided into groups by their convexity. Upper row of each
+    subfigure: pores with minimal roundness in the group, lower row: pores with
+    maximal roundness in the group.}
+  \label{fig:convexity-groups-roundness}
+\end{figure*}
 
 \bibliography{paper}
 \end{document}
