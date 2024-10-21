@@ -422,7 +422,8 @@ underclusterized pores.
 \begin{figure*}
   \centering
   \subfigure[$0.55 \le C < 0.65$]{
-    \includegraphics[width=0.4\linewidth]{images/groups-score-0.60.png}}
+    \includegraphics[width=0.4\linewidth]{images/groups-score-0.60.png}
+    \label{fig:small-gap}}
   \hfill
   \subfigure[$0.65 \le C < 0.75$]{
     \includegraphics[width=0.4\linewidth]{images/groups-score-0.70.png}}
@@ -431,7 +432,8 @@ underclusterized pores.
     \includegraphics[width=0.4\linewidth]{images/groups-score-0.80.png}}
   \hfill
   \subfigure[$0.85 \le C < 0.95$]{
-    \includegraphics[width=0.4\linewidth]{images/groups-score-0.90.png}}
+    \includegraphics[width=0.4\linewidth]{images/groups-score-0.90.png}
+    \label{fig:small-blob}}
   \caption[]{Pores divided into groups by their convexity. Upper row of each
     subfigure: pores with minimal \highlight{awesomeness} in the group, lower
     row: pores with maximal \highlight{awesomeness} in the group.}
@@ -456,6 +458,40 @@ underclusterized pores.
     maximal roundness in the group.}
   \label{fig:convexity-groups-roundness}
 \end{figure*}
+
+\section{Summary}
+In this paper we have developed a new parameter for assession of pore
+clusterization quality which can be used as a replacement for roundness
+parameter. Benefits of this parameter include:
+\begin{itemize}
+\item Lower absoulute value of correlation with other common parameters, such as
+  convexity, elongation and roundness.
+\item Ease of computation.
+\item Ability to precisely separate well-clusterized pores and underclusterized
+  pores in a high convexity range, even if roundness fails to do so.
+\item Rotation and resize invariance.
+\end{itemize}
+
+Flaws of this parameter include:
+\begin{itemize}
+\item C-shaped pores with a small gap, like the pore on the left-top of
+  \cref{fig:small-gap} always have small \highlight{awesomeness}, even if they
+  are otherwise clusterized correctly.
+\item Small changes to an image of a pore, when cleverly done, can make drastic
+  changes in \highlight{awesomeness}.
+\end{itemize}
+
+The first flaw can be dealt with by replacing the Euclidean distance in
+\cref{eq:intro} with the length of the shortest path between points which does
+not cross the pore's boundary. This, however, can increase computational time
+significantly.
+
+The second flaw means that a pore with a very small attachment (compared to the
+pore's total surface) connected with a thin throat to the pore's main body has
+low \highlight{awesomeness}, like the third pore on \cref{fig:small-blob}, a row
+on the top. Normally, small attachments like this do not contribute to any
+physical process in any way, so they can simply be ignored and, therefore, their
+impact on \highlight{awesomeness} may be not justified.
 
 \bibliography{paper}
 \end{document}
