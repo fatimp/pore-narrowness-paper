@@ -96,10 +96,10 @@ where $\rho_{AB}$ is the Euclidean distance between $A$ and $B$ and $L_{AB}$ is
 the length of a pore's boundary segment with end points $A$ and $B$ (there are
 two such segments, you need to take the segment with minimal length). Suppose
 $B$ is a set of all points on the pore's boundary. We define a new pore shape
-parameter $p$, called ``\highlight{awesomeness}'', using \ref{eq:intro}:
+parameter $p$ using \ref{eq:intro}:
 \begin{equation}
   p = \inf \{p_{AB} \ \forall (A, B) \in B^2\}
-  \label{eq:awesomeness}
+  \label{eq:pre-awesomeness}
 \end{equation}
 Obviously, it's unlikely that $p$ = $p_{AC}$ because $L_{AC} \approx \rho_{AC}$.
 It's easy to see that $0 \le p \le 1$ because $0 \le \rho_{AB} \le L_{AB}$ for
@@ -117,6 +117,36 @@ of all other curves which connect those points.
     distance between $A$ and $B$ divided by length of the blue contour $L$.}
   \label{fig:parameter}
 \end{figure}
+
+Although a guaranteed upper bound for $p$ is 1, it's reachable only for
+degenerate shapes in the form of line segments. The biggest value for
+non-degenerate shapes is reached for a disk and equals to $2/\pi$. Similarly, an
+ellipse defined as
+\begin{equation*}
+  \frac{x^2}{a^2} + \frac{y^2}{b^2} = 1
+\end{equation*}
+has the biggest known value of $p$ from all shapes with elongation $E = a / b$
+(suppose $a \le b$). Using Ramanujan's formula for the perimeter of an ellipse
+we get
+\begin{equation*}
+  p \le p_{ellipse} = \frac{2a}{P/2} \approx \frac{4E}{\pi[3(1+E) - \sqrt{(3E+1)(E+3)}]}
+\end{equation*}
+where $P$ is a perimeter of the ellipse. By dividing $p$ by $p_{ellipse}$ we
+obtain an improved pore shape parameter $P$:
+\begin{equation*}
+  P = \frac{\pi p [3(1+E) - \sqrt{(3E+1)(E+3)}]}{4E}
+\end{equation*}
+
+Substituting \cref{eq:pre-awesomeness} and \cref{eq:intro} we get a new pore
+shape parameter we call ``\highlight{awesomeness}'':
+\begin{equation}
+  \begin{aligned}
+    P &= \frac{\pi [3(1+E) - \sqrt{(3E+1)(E+3)}]}{4E} \times \\
+    & \times \inf \{\frac{\rho_{AB}}{L_{AB}} \ \forall (A, B) \in B^2\}
+  \end{aligned}
+  \label{eq:awesomeness}
+\end{equation}
+where, again, $E$ is the elongation and $B$ is the boundary of the pore.
 
 \section{Computational algorithm}
 \label{seq:alg}
@@ -324,10 +354,6 @@ exploits the commutative property $p_{AB} = p_{BA}$.
 If \texttt{sort} cannot sort boundary points, \texttt{pmin} will return
 \texttt{+infinity}.
 
-Although a guaranteed upper bound for awesomeness is 1, it's reachable only for
-degenerate shapes in the form of line segments. The biggest value for
-non-degenerate shapes is reached for a disk and equals to $2/\pi$.
-
 \section{Results}
 We computed \highlight{awesomeness} for 4000 synthetically generated images with
 dimensions $1000 \times 1000$ pixels (1000 images from 4 different
@@ -386,24 +412,10 @@ space.
 It can be seen that if a pore has low convexity ($< 0.6$)
 \highlight{awesomeness} adds no information to the pore's descriptors because it
 stays relatively low for all pores. When, however, the convexity is high it adds
-a new dimension to the parameter space. \highlight{Awesomeness} also correlates
-with elongation, but this correlation can be reduced. Remember, that a disk has
-the biggest known \highlight{awesomeness}. Similarly, an ellipse defined as
-\begin{equation*}
-  \frac{x^2}{a^2} + \frac{y^2}{b^2} = 1
-\end{equation*}
-has the biggest known \highlight{awesomeness} from all shapes with elongation
-$E = a / b$ (suppose $a \le b$) (see \cref{fig:ae-space}). Using Ramanujan's
-formular for the perimeter of an ellipse we get
-\begin{equation*}
-  p \le p_{ellipse} = \frac{2a}{P/2} \approx \frac{4E}{\pi[3(1+E) - \sqrt{(3E+1)(E+3)}]}
-\end{equation*}
-By dividing \highlight{awesomeness} by $p_{ellipse}$ we obtain an improved
-parameter $p'$:
-\begin{equation}
-  p' = \frac{\pi p [3(1+E) - \sqrt{(3E+1)(E+3)}]}{4E}
-  \label{eq:improved-awesomeness}
-\end{equation}
+a new dimension to the parameter space.
+
+
+% CHECK THIS:
 Indeed, on \cref{fig:caei-space} we see that improved awesomeness is less
 correlated with elongation.
 
