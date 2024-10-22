@@ -72,20 +72,20 @@ All of these parameters lie in the range $[0, 1]$.
 
 \section{A new pore shape parameter}
 We propose a new parameter for shape description which is based on the idea of
-numerical assession of bottle necks in pores. For simplicity, we will assume
+numerical assession of bottlenecks in pores. For simplicity, we will assume
 that our pore is 1-connected. Suppose you have a round pore in the form close to
 a disk and another pore in the form of a dumbbell. We want to develop a
 parameter which would be close to 1 for the first pore and close to 0 for the
 second. For this purpose we want to visit all points which lie on the pore's
-boundary and find a pair of points which form a bottle neck and have a small
+boundary and find a pair of points which form a bottleneck and have a small
 distance between each other. Obviously, not all pairs of points which are close
-to each other form a bottle neck. Namely, on \cref{fig:parameter} points $A$ and
-$B$ form a bottle neck and points $A$ and $C$ do not form it. If you choose a
+to each other form a bottleneck. Namely, on \cref{fig:parameter} points $A$ and
+$B$ form a bottleneck and points $A$ and $C$ do not form it. If you choose a
 point $O$ which lies outside of the pore and travel along the pore's boundary in
 one direction (either clockwise or counter-clockwise), when you arrive at $A$
 you will see the point $O$ to your left and when you are in $B$ you will see $O$
 to your right (or vice-versa). But if you are at $A$ or $C$ you will see $O$ to
-the same side from you. Instead of doing this check for ``bottle-neckness'', we
+the same side from you. Instead of doing this check for ``bottleneckness'', we
 add a penalty coefficient to the distance between points, namely for a pair of
 points $(A, B)$ we calculate the following:
 \begin{equation}
@@ -109,7 +109,7 @@ of all other curves which connect those points.
   \centering
   \includegraphics[width=0.9\linewidth]{images/parameter.png}
   \caption[]{A dumbbell-like boundary of a pore. Points $A$ and $B$ form a
-    bottle neck while points $A$ and $C$ do not. This can seen by a relative
+    bottleneck while points $A$ and $C$ do not. This can seen by a relative
     position of the point $O$ while traversing the boundary
     counter-clockwise. Namely, it's on the left side when crossing $A$ but on
     the right side when crossing $B$. When crossing $A$ and $C$, the relative
