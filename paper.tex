@@ -146,7 +146,9 @@ shape parameter we call ``\highlight{awesomeness}'':
   \end{aligned}
   \label{eq:awesomeness}
 \end{equation}
-where, again, $E$ is the elongation and $B$ is the boundary of the pore.
+where, again, $E$ and $B$ are the elongation the boundary of the pore,
+$\rho_{AB}$ is the Euclidean distance between points $A$ and $B$ and $L_{AB}$ is
+the length of a path (the shortest one) between $A$ and $B$ along the boundary.
 
 \section{Computational algorithm}
 \label{seq:alg}
@@ -163,8 +165,9 @@ consists of three parts and is shown in \cref{alg:main}.
     \Comment Construct a list of boundary points (\cref{alg:extraction}).
     \State \texttt{\%bs $\gets$ sort(bs)}
     \Comment Sort points as described in \cref{alg:sort}.
-    \State \textbf{return} \texttt{pmin(\%bs)}
-    \Comment The final step is in \cref{alg:pmin}.
+    \State \textbf{return} \texttt{c $\cdot$ pmin(\%bs)}
+    \Comment The final step is in \cref{alg:pmin}. \texttt{c} is the fraction in
+    \cref{eq:awesomeness}.
     \EndProcedure
   \end{algorithmic}
 \end{algorithm}
@@ -397,13 +400,9 @@ space.
     \includegraphics[width=0.4\linewidth]{images/cer.png}
     \label{fig:cer-space}}
   \vskip\baselineskip
-  \subfigure[Elongation-\highlight{Awesomeness} space]{
+  \subfigure[Elongation-\highlight{Correlated awesomeness} space]{
     \includegraphics[width=0.4\linewidth]{images/ae.png}
     \label{fig:ae-space}}
-  \hfill
-  \subfigure[Convexity-elongation-\highlight{improved awesomeness} space]{
-    \includegraphics[width=0.4\linewidth]{images/caei.png}
-    \label{fig:caei-space}}
   \caption[]{Synthetically generated pores shown as points in different
     parameter spaces.}
   \label{fig:parameter-spaces}
@@ -414,16 +413,17 @@ It can be seen that if a pore has low convexity ($< 0.6$)
 stays relatively low for all pores. When, however, the convexity is high it adds
 a new dimension to the parameter space.
 
-
-% CHECK THIS:
-Indeed, on \cref{fig:caei-space} we see that improved awesomeness is less
-correlated with elongation.
-
 Another common parameter for describing pore shapes is roundness. Figure
 \ref{fig:cer-space} features convexity-elongation-roundness (CER) space.
 It can be seen that roundness-convexity correlation is bigger than
 awesomeness-convexity correlation. All correlation values are in
 \cref{tab:correlations}.
+
+On \cref{fig:ae-space} pores are shown in $p-E$ space where $p$ is a
+``correlated'' \highlight{awesomeness} parameter \cref{eq:pre-awesomeness}. It
+shows that our assumption on the maximal value of \highlight{awesomeness} is
+correct indeed.
+
 \begin{table*}[!htp]
   \centering
   \begin{tabular}{|c|c|c|c|c|}
