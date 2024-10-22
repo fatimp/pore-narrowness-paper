@@ -46,7 +46,29 @@ there. In this work we are trying to find a numeric parameter which assesses
 quality of pore network extraction from a SEM slice by judging if an individual
 pore can be divided into more subpores or not. This work expands the efforts
 made by Karsanina et al.\cite{PLoS_ONE} \highlight{Or not Karsanina. Must point
-to the Skvortsova's parameter}.
+  to the Skvortsova's parameter}.
+
+In this paper we also use the following common parameters which are used to
+describe pore shapes:
+\begin{itemize}
+\item Convexity $C$ is a relation between surface of a pore and surface bounded
+  by its convex hull.
+\item Roundness $R$ is a relation between perimeter of a disk which has the same
+  surface as a pore to perimeter of that pore.
+\item Elongation $E$ is a relation between eigenvalues of a matrix $A$ with the
+  smallest and the biggest absolute values. $A$ is a $2 \times 2$ covariation
+  matrix of coordinates of pore points. For a discrete image of a pore its
+  elements equal to
+  \begin{equation*}
+    a_{ij} = \sum_{x \in \left\{
+      \begin{array}{l}
+        \text{Coordinates of points} \\
+        \text{belonging to the pore}
+      \end{array}
+      \right\}} (x_i - \overline{x_i})(x_j - \overline{x_j})
+  \end{equation*}
+\end{itemize}
+All of these parameters lie in the range $[0, 1]$.
 
 \section{A new pore shape parameter}
 We propose a new parameter for shape description which is based on the idea of
