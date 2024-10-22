@@ -77,7 +77,7 @@ that our pore is 1-connected. Suppose you have a round pore in the form close to
 a disk and another pore in the form of a dumbbell. We want to develop a
 parameter which would be close to 1 for the first pore and close to 0 for the
 second. For this purpose we want to visit all points which lie on the pore's
-boundary and find a pair of points which form a bottleneck and have a small
+boundary and find a pair of points which form a bottleneck, i.e have a small
 distance between each other. Obviously, not all pairs of points which are close
 to each other form a bottleneck. Namely, on \cref{fig:parameter} points $A$ and
 $B$ form a bottleneck and points $A$ and $C$ do not form it. If you choose a
@@ -134,6 +134,7 @@ consists of three parts and is shown in \cref{alg:main}.
     \State \texttt{\%bs $\gets$ sort(bs)}
     \Comment Sort points as described in \cref{alg:sort}.
     \State \textbf{return} \texttt{pmin(\%bs)}
+    \Comment The final step is in \cref{alg:pmin}.
     \EndProcedure
   \end{algorithmic}
 \end{algorithm}
@@ -145,26 +146,29 @@ the boundary.
 
 Suppose the boundary is defined by a parameteric equation
 \begin{equation*}
+  \left\{
   \begin{aligned}
     x &= f(t) \\
     y &= g(t)
   \end{aligned}
+  \right.
 \end{equation*}
 or, using a shorter notation,
 $B = \begin{pmatrix} x_B \\ y_B \end{pmatrix} = \begin{pmatrix} f \\ g \end{pmatrix}(t)$
 Suppose, you have two points: $B_1 = \begin{pmatrix} f \\ g \end{pmatrix}(t_1)$
 and $B_2 = \begin{pmatrix} f \\ g \end{pmatrix}(t_2)$. The sorting in the step 2
-implies that if $t_1 < t_2$, the point $B_1$ must appear before $B_2$ in $bs$.
+implies that if $t_1 < t_2$, the point $B_1$ must appear before $B_2$ in
+\texttt{\%bs}.
 
 In the following algorithms we will use a notion of single linked lists (or
-simply lists). A list of elements of type $a$ can be defined using the following
-data type with two constructors, \texttt{[]} and \texttt{(:)}:
+simply lists). A list of elements of type \texttt{a} can be defined using the
+following data type with two constructors, \texttt{[]} and \texttt{(:)}:
 \begin{verbatim}
 data List a = [] | a:(List a)
 \end{verbatim}
 The first constructor creates an empty list and the second attaches an element
-of type $a$ to the list of elements of type $a$. Sometimes we will use
-conventional functions for working with lists such as \texttt{head},
+of type \texttt{a} to the list of elements of type \texttt{a}. Sometimes we will
+use conventional functions for working with lists such as \texttt{head},
 \texttt{tail}, \texttt{map}, \texttt{foldl} and so on.
 
 The algorithm for boundary extraction is shown in \cref{alg:extraction}.
@@ -193,9 +197,10 @@ The algorithm for boundary extraction is shown in \cref{alg:extraction}.
 
 Sorting the boundary points can be done by ensuring that every two consecutive
 points have Chebyshev distance equal to 1. This is done by making a list which
-contains some (maybe random) point on the boundary and successive addition
-neighbor points (relative to the head of that list) to the list. It may be that
-all neighbors must be tried to successfully construct the sorted list.
+contains some (maybe random) point belonging to the boundary and successive
+addition of neighbor points (relative to the head of that list) to the list. It
+may be that all neighbors must be tried to successfully construct the sorted
+list.
 
 As a heuristic, we maintain a list of seen neighbors, that is, for every point
 added to the sorted list we obtain all its neighbors and add them to a separate
@@ -277,7 +282,8 @@ list do not represent a simple closed curve (like on \cref{fig:good-and-bad}),
 Finaly, the function \texttt{pmin} is described in \cref{alg:pmin}. This
 algorithms assumes that there are enough boundary points in an image. If, for
 example, an image is taken with bad resolution (i.e. pores consist only of a few
-pixels) some quality improving techniques must be applied first.
+pixels) some quality improving techniques must be applied first. It also
+exploits the commutative property $p_{AB} = p_{BA}$.
 \begin{algorithm}[H]
   \caption{The last step of the algorithm for awesomeness: the function \texttt{pmin}.}
   \label{alg:pmin}
