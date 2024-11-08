@@ -100,9 +100,15 @@ two such segments, you need to take the segment with minimal length). Suppose
 $B$ is a set of all points on the pore's boundary. We define a new pore shape
 parameter $p$ using \ref{eq:intro}:
 \begin{equation}
-  p = \inf \{p_{AB} \ \forall (A, B) \in B^2\}
+  p = \inf \{ p_{AB} \ \forall (A, B) \in B^2 : 2 L_{AB} \ge cP \}
   \label{eq:pre-awesomeness}
 \end{equation}
+The condition on a pair of points $(A, B)$ is that the ``boundary distance''
+between them must be no less than $\frac{cP}{2}$ where $P$ is a perimeter of a
+pore and $c \in [0,1]$ is some parameter. This parameter is introduced to
+prevent small features of the boundary from affecting $p$. In this paper we will
+use $c = 0.1$. A value $c = 0$ means there are no restrictions on $(A, B)$.
+
 Obviously, it's unlikely that $p$ = $p_{AC}$ because $L_{AC} \approx \rho_{AC}$.
 It's easy to see that $0 \le p \le 1$ because $0 \le \rho_{AB} \le L_{AB}$ for
 any $A$ and $B$ for a line segment which connects $A$ and $B$ is the shortest
@@ -144,11 +150,12 @@ shape parameter we call ``\highlight{awesomeness}'':
 \begin{equation}
   \begin{aligned}
     P &= \frac{\pi [3(1+E) - \sqrt{(3E+1)(E+3)}]}{4E} \times \\
-    & \times \inf \{\frac{\rho_{AB}}{L_{AB}} \ \forall (A, B) \in B^2\}
+    & \times \inf \{\frac{\rho_{AB}}{L_{AB}} \ \forall (A, B) \in B^2 : 2
+    L_{AB} \ge cP \}
   \end{aligned}
   \label{eq:awesomeness}
 \end{equation}
-where, again, $E$ and $B$ are the elongation the boundary of the pore,
+where, again, $E$ and $B$ are the elongation and the boundary of the pore,
 $\rho_{AB}$ is the Euclidean distance between points $A$ and $B$ and $L_{AB}$ is
 the length of a path (the shortest one) between $A$ and $B$ along the boundary.
 
@@ -519,21 +526,12 @@ Flaws of this parameter include:
 \item C-shaped pores with a small gap, like the pore on the left-top of
   \cref{fig:small-gap} always have small \highlight{awesomeness}, even if they
   are otherwise clusterized correctly.
-\item Small changes to an image of a pore, when cleverly done, can make drastic
-  changes in \highlight{awesomeness}.
 \end{itemize}
 
 The first flaw can be dealt with by replacing the Euclidean distance in
 \cref{eq:intro} with the length of the shortest path between points which does
 not cross the pore's boundary. This, however, can increase computational time
 significantly.
-
-The second flaw means that a pore with a very small attachment (compared to the
-pore's total surface) connected with a thin throat to the pore's main body has
-low \highlight{awesomeness}, like the third pore on \cref{fig:small-blob}, a row
-on the top. Normally, small attachments like this do not contribute to any
-physical process in any way, so they can simply be ignored and, therefore, their
-impact on \highlight{awesomeness} may be not justified.
 
 \bibliography{paper}
 \end{document}
