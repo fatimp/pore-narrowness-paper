@@ -174,8 +174,8 @@ consists of three parts and is shown in \cref{alg:main}.
     \Comment Construct a list of boundary points (\cref{alg:extraction}).
     \State \texttt{\%bs $\gets$ sort(bs)}
     \Comment Sort points as described in \cref{alg:sort}.
-    \State \textbf{return} \texttt{c $\cdot$ pmin(\%bs)}
-    \Comment The final step is in \cref{alg:pmin}. \texttt{c} is the fraction in
+    \State \textbf{return} \texttt{m $\cdot$ pmin(\%bs)}
+    \Comment The final step is in \cref{alg:pmin}. \texttt{m} is the fraction in
     \cref{eq:awesomeness}.
     \EndProcedure
   \end{algorithmic}
@@ -184,7 +184,7 @@ consists of three parts and is shown in \cref{alg:main}.
 The first step extracts a list of boundary points from an image of a pore, the
 second step sorts them in the order descried later and the third and the last
 step minimizes $p_{AB}$ parameter for each pair of points $(A, B)$ which lie on
-the boundary.
+the boundary (wtih respect to constraints introduced by the parameter $c$).
 
 Suppose the boundary is defined by a parameteric equation
 \begin{equation*}
@@ -268,7 +268,7 @@ point. A complete algorithm is \cref{alg:sort} where BK-trees are used.
     \texttt{neighbors} is an additional list of seen neighbors, \texttt{tree} is
     a BK-tree of unsorted points.
     \If{\texttt{tree\_empty\_p(tree)}}
-    \State \textbf{return} \texttt{sorted}
+    \State \textbf{return} \texttt{Just sorted}
     \Comment No more unsorted points, we are finished.
     \EndIf
     \State \texttt{last $\gets$ head(sorted)}
@@ -276,7 +276,7 @@ point. A complete algorithm is \cref{alg:sort} where BK-trees are used.
     \State \textbf{return} \texttt{cheb\_dist(last, point) = 1}
     \EndProcedure
     \If{\texttt{notevery(check\_dist, neighbors)}}
-    \State \textbf{return} \texttt{[]}
+    \State \textbf{return} \texttt{Nothing}
     \Comment We have failed, try to sort another way
     \EndIf
     \State \texttt{ns $\gets$ bk\_tree\_search(tree, last, 1)}
@@ -292,8 +292,8 @@ point. A complete algorithm is \cref{alg:sort} where BK-trees are used.
     \State \textbf{return} \texttt{go(\%sorted, \%\%neighbors, \%tree)}
     \EndProcedure
     \State \texttt{sorted $\gets$ map(\%go, ns)}
-    \State \textbf{return} The first non-empty list from \texttt{sorted}, if
-    any. Otherwise return \texttt{[]}.
+    \State \textbf{return} The first \texttt{Just} value from \texttt{sorted},
+    if any. Otherwise return \texttt{Nothing}.
     \EndProcedure
     \State \textbf{return} \texttt{go([start], [], tree)}
     \EndProcedure
@@ -303,7 +303,8 @@ point. A complete algorithm is \cref{alg:sort} where BK-trees are used.
 The \cref{alg:sort} serves two purposes: not only it sorts boundary points, it
 also checks the boundary for correctness. If boundary points in the unsorted
 list do not represent a simple closed curve (like on \cref{fig:good-and-bad}),
-\texttt{sort} will return an empty list.
+\texttt{sort} will return \texttt{Nothing}, otherwise a sorted list is returned
+wrapped in \texttt{Just}.
 \begin{figure}[tp]
   \centering
   \subfigure[A good boundary]{
@@ -336,35 +337,47 @@ exploits the commutative property $p_{AB} = p_{BA}$.
     points. The function \texttt{dist} calculates the distance between two
     points.
     \EndProcedure
-    \Procedure{\texttt{perimeter}}{\texttt{points}}
-    \State \texttt{p1 $\gets$ foldl((+), 0, pairwise\_distances(points))}
+    \Procedure{\texttt{perimeter}}{\texttt{points, c}}
+    \State \texttt{p1 $\gets$ foldl1((+), pairwise\_distances(points))}
     \State \texttt{p2 $\gets$ dist(head(points), last(points))}
     \State \textbf{return} \texttt{p1 + p2}
     \EndProcedure
-    \Procedure{\texttt{minimize\_on\_head}}{\texttt{acc, p, points}}
+    \Procedure{\texttt{minimize\_on\_head}}{\texttt{acc, p, bds, points}}
     \Comment \texttt{acc} is the best (minimal) parameter found so far,
-    \texttt{p} is a perimeter of the boundary.
+    \texttt{p} is a perimeter of the boundary, \texttt{bds} is a list of
+    distances along the boundary from the head of \texttt{points} to all points
+    in \texttt{tail(points)}.
     \Procedure{\texttt{go}}{\texttt{acc, x}}
-    \State \texttt{(point, boundary\_dist) $\gets$ x}
-    \State \texttt{awesomeness $\gets$ dist(point, head(points)) /
-      min(boundary\_dist, p - boundary\_dist)}
-    \State \textbf{return} \texttt{min(acc, awesomeness)}
+    \State \texttt{(point, bd) $\gets$ x}
+    \State \texttt{\%bd $\gets$ min(bd, p - bd)}
+    \If{\texttt{\%bd < c/2 $\cdot$ p}}
+    \State \textbf{return} \texttt{acc}
+    \Else
+    \State \texttt{param $\gets$ dist(point, head(points)) / \%bd}
+    \State \textbf{return} \texttt{min(acc, param)}
+    \EndIf
     \EndProcedure
-    \State \texttt{ds $\gets$ scanl((+), 0, pairwise\_distances(points))}
-    \State \texttt{tmp $\gets$ zip(tail(points), tail(ds))}
+    \State \texttt{tmp $\gets$ zip(tail(points), ds)}
     \State \textbf{return} \texttt{foldl(go, acc, tmp)}
     \EndProcedure
     \Procedure{\texttt{pmin}}{\texttt{points}}
     \State \texttt{p $\gets$ perimeter(points)}
+    \State \texttt{bds $\gets$ scanl1((+), pairwise\_distances(points))}
     \Procedure{\texttt{go}}{\texttt{acc, points}}
-    \State \textbf{return} \texttt{minimize\_on\_head(acc, p, points)}
+    \State \texttt{(param, bds) $\gets$ acc}
+    \State \texttt{\%param $\gets$ minimize\_on\_head(param, p, bds, points)}
+    \State \texttt{\%bds  $\gets$ map(subtract(head(bds)), tail(bds))}
+    \State \textbf{return} \texttt{(\%param, \%bds)}
     \EndProcedure
-    \State \textbf{return} \texttt{foldl(go, +infinity, points)}
+    \State \textbf{return} \texttt{foldl(go, (+Inf, bds), tails(points))}
+    \Comment For a list \texttt{a = [1,2,3]} \texttt{tails(a)} returns
+    \texttt{[[1,2,3], [2,3], [3]]}.
     \EndProcedure
   \end{algorithmic}
 \end{algorithm}
-If \texttt{sort} cannot sort boundary points, \texttt{pmin} will return
-\texttt{+infinity}.
+
+Algorithmic complexity of \ref{alg:extraction} and \ref{alg:sort} is $O(n)$ and
+of \ref{alg:pmin} is $O(n^2)$.
 
 \section{Results}
 We computed \highlight{awesomeness} for 4000 synthetically generated images with
