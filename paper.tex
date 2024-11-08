@@ -55,10 +55,11 @@ describe pore shapes:
   by its convex hull.
 \item Roundness $R$ is a relation between perimeter of a disk which has the same
   surface as a pore to perimeter of that pore.
-\item Elongation $E$ is a relation between eigenvalues of a matrix $A$ with the
-  smallest and the biggest absolute values. $A$ is a $2 \times 2$ covariation
-  matrix of coordinates of pore points. For a discrete image of a pore its
-  elements equal to
+\item Elongation $E$ is a square root of a relation
+  $|\frac{\lambda_1}{\lambda_2}|$ where $\lambda_1$ and $\lambda_2$ are two
+  eigenvalues of a matrix $A$ which is a $2 \times 2$ covariation matrix of
+  coordinates of pore points. For a discrete image of a pore its elements equal
+  to
   \begin{equation*}
     a_{ij} = \sum_{x \in \left\{
       \begin{array}{l}
@@ -67,6 +68,7 @@ describe pore shapes:
       \end{array}
       \right\}} (x_i - \overline{x_i})(x_j - \overline{x_j})
   \end{equation*}
+  Eigenvalues are enumerated so that $E$ is no bigger than $1$.
 \end{itemize}
 All of these parameters lie in the range $[0, 1]$.
 
