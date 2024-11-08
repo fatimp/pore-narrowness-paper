@@ -82,14 +82,14 @@ second. For this purpose we want to visit all points which lie on the pore's
 boundary and find a pair of points which form a bottleneck, i.e have a small
 distance between each other. Obviously, not all pairs of points which are close
 to each other form a bottleneck. Namely, on \cref{fig:parameter} points $A$ and
-$B$ form a bottleneck and points $A$ and $C$ do not form it. If you choose a
-point $O$ which lies outside of the pore and travel along the pore's boundary in
-one direction (either clockwise or counter-clockwise), when you arrive at $A$
-you will see the point $O$ to your left and when you are in $B$ you will see $O$
-to your right (or vice-versa). But if you are at $A$ or $C$ you will see $O$ to
-the same side from you. Instead of doing this check for ``bottleneckness'', we
-add a penalty coefficient to the distance between points, namely for a pair of
-points $(A, B)$ we calculate the following:
+$B$ form a bottleneck and points $A$ and $C$ do not. If you choose a point $O$
+which lies outside of the pore and travel along the pore's boundary in one
+direction (either clockwise or counter-clockwise), when you arrive at $A$ you
+will see the point $O$ to your left and when you are in $B$ you will see $O$ to
+your right (or vice-versa). But if you are at $A$ or $C$ you will see $O$ to the
+same side from you. Instead of doing this check for ``bottleneckness'', we add a
+penalty coefficient to the distance between points, namely for a pair of points
+$(A, B)$ we calculate the following:
 \begin{equation}
   p_{AB} = \rho_{AB} / L_{AB}
   \label{eq:intro}
