@@ -200,7 +200,7 @@ $B = \begin{pmatrix} x_B \\ y_B \end{pmatrix} = \begin{pmatrix} f \\ g \end{pmat
 Suppose, you have two points: $B_1 = \begin{pmatrix} f \\ g \end{pmatrix}(t_1)$
 and $B_2 = \begin{pmatrix} f \\ g \end{pmatrix}(t_2)$. The sorting in the step 2
 implies that if $t_1 < t_2$, the point $B_1$ must appear before $B_2$ in
-\texttt{\%bs}.
+\texttt{\%bs} (denote it as $B_1 < B_2$).
 
 In the following algorithms we will use a notion of single linked lists (or
 simply lists). A list of elements of type \texttt{a} can be defined using the
@@ -367,6 +367,7 @@ exploits the commutative property $p_{AB} = p_{BA}$.
     \State \texttt{(param, bds) $\gets$ acc}
     \State \texttt{\%param $\gets$ minimize\_on\_head(param, p, bds, points)}
     \State \texttt{\%bds  $\gets$ map(subtract(head(bds)), tail(bds))}
+    \Comment $L_{B_2B_3} = L_{B_1B_3} - L_{B_1B_2}$ if $B_1 < B_2 < B_3$.
     \State \textbf{return} \texttt{(\%param, \%bds)}
     \EndProcedure
     \State \textbf{return} \texttt{foldl(go, (+Inf, bds), tails(points))}
