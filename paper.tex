@@ -97,8 +97,8 @@ $(A, B)$ we calculate the following:
 where $\rho_{AB}$ is the Euclidean distance between $A$ and $B$ and $L_{AB}$ is
 the length of a pore's boundary segment with end points $A$ and $B$ (there are
 two such segments, you need to take the segment with minimal length). Suppose
-$B$ is a set of all points on the pore's boundary. We define a new pore shape
-parameter $p$ using \ref{eq:intro}:
+$B$ is a set of all points on the pore's boundary. We define a preliminary pore
+shape parameter $p$ using \ref{eq:intro}:
 \begin{equation}
   p = \inf \{ p_{AB} \ \forall (A, B) \in B^2 : 2 L_{AB} \ge cP \}
   \label{eq:pre-awesomeness}
@@ -140,7 +140,7 @@ we get
   p \le p_{ellipse} = \frac{2a}{P/2} \approx \frac{4E}{\pi[3(1+E) - \sqrt{(3E+1)(E+3)}]}
 \end{equation*}
 where $P$ is a perimeter of the ellipse. By dividing $p$ by $p_{ellipse}$ we
-obtain an improved pore shape parameter $P$:
+obtain a parameter $P$:
 \begin{equation*}
   P = \frac{\pi p [3(1+E) - \sqrt{(3E+1)(E+3)}]}{4E}
 \end{equation*}
