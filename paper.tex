@@ -581,10 +581,18 @@ Flaws of this parameter include:
 
 The first flaw can be dealt with by replacing the Euclidean distance $\rho_{AB}$
 in \cref{eq:intro} with the length $d_{AB}$ of the shortest path between points
-which does not cross the pore's boundary. Although the resulting algorithm will
-have the same $O(n^2)$ complexity, doing so can increase computational time
-significantly. We call the parameter $P'$ with $d_{AB}$ in the place of
-$\rho_{AB}$ ``improved awesomeness''.
+which does not cross the pore's boundary (see \cref{fig:improved}). Although the
+resulting algorithm will have the same $O(n^2)$ complexity, doing so can
+increase computational time significantly. We call the parameter $P'$ with
+$d_{AB}$ in the place of $\rho_{AB}$ ``improved awesomeness''. The following
+relation always holds: $0 < P \le P' \le 1$.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\linewidth]{images/improved.png}
+  \caption[]{Pairs of points responsible for \highlight{awesomeness} (red) and
+    improved \highlight{awesomeness} (green).}
+  \label{fig:improved}
+\end{figure}
 
 We present an opensource solution for calculating \highlight{awesomeness} and
 improved \highlight{awesomeness}. \highlight{E-mail us and buy us coffee so we
