@@ -5,15 +5,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import sqlite3
 
-f = lambda e: 4*e/(np.pi * (3*(1+e) - np.sqrt((3*e+1) * (e+3))))
-
 with sqlite3.connect('glyphs.db') as db:
     general = pd.read_sql_query('select * from pores where lfer > 0.9', db)
 
 shit = pd.read_csv('score.csv')
 data = general.merge(shit, on = 'label', how = 'inner', validate = "1:1")
-
-data['score'] = data['score'] / f(data['elongation'])
 
 normal = data.query('name == "normal/"')
 thin = data.query('name == "thin/"')
@@ -30,6 +26,6 @@ ax.scatter(mnist['convexity'], mnist['elongation'], mnist['score'], marker = '^'
 ax.scatter(mostlyconvex['convexity'], mostlyconvex['elongation'], mostlyconvex['score'], marker = '+')
 ax.set_xlabel('\nConvexity', linespacing = 2)
 ax.set_ylabel('\nElongation', linespacing = 2)
-ax.set_zlabel('Awesomeness')
+ax.set_zlabel('Narrowness')
 ax.legend(['Normal', 'Thin', 'MNIST', 'Mostlyconvex'], markerscale = 2.5)
 plt.savefig('caei.png', bbox_inches = 'tight', pad_inches = 0.4)

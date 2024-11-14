@@ -10,8 +10,6 @@ from PIL.ImageOps import invert
 import sys
 import os
 
-f = lambda e: 4*e/(np.pi * (3*(1+e) - np.sqrt((3*e+1) * (e+3))))
-
 what = sys.argv[1]
 how = sys.argv[2]
 mid = float(sys.argv[3])
@@ -23,7 +21,6 @@ with sqlite3.connect('glyphs.db') as db:
 
 shit = pd.read_csv('score.csv')
 data = general.merge(shit, on = 'label', how = 'inner', validate = "1:1")
-data['score'] = data['score'] / f(data['elongation'])
 
 query = 'convexity >= %f and convexity < %f' % (start, end)
 subdata = data.query(query).sort_values(what, axis = 0)
