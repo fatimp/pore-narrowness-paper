@@ -211,7 +211,8 @@ data List a = [] | a:(List a)
 The first constructor creates an empty list and the second attaches an element
 of type \texttt{a} to the list of elements of type \texttt{a}. Sometimes we will
 use conventional functions for working with lists such as \texttt{head},
-\texttt{tail}, \texttt{map}, \texttt{foldl} and so on.
+\texttt{tail}, \texttt{map}, \texttt{foldl} and so on\cite[Chapter~4: Functional
+programming]{o2008real}.
 
 The algorithm for boundary extraction is shown in \cref{alg:extraction}.
 \begin{algorithm}[H]
@@ -578,9 +579,16 @@ Flaws of this parameter include:
 
 The first flaw can be dealt with by replacing the Euclidean distance $\rho_{AB}$
 in \cref{eq:intro} with the length $d_{AB}$ of the shortest path between points
-which does not cross the pore's boundary (see \cref{fig:improved}). Although the
-resulting algorithm will have the same $O(n^2)$ complexity, doing so can
-increase computational time significantly. We call the parameter $P'$ with
+which does not cross the pore's boundary (see \cref{fig:improved}). We can treat
+the boundary as a simple polygon and there is a fast $O(n)$ algorithm for
+finding the shortest path between points inside such
+polygon\cite{guibas1986linear} once its triangulation is known. One of the
+simplest triangulation algorithms is ear clipping
+algorithm\cite{eberly2008triangulation} which works in $O(n^2)$ time. Other
+works on the shortest path problem include
+\cite{asano2010constant,har2014shortest,cleve2019experimental,asano1985visibility}.
+Although the resulting algorithm will have the same $O(n^2)$ complexity, doing
+so can increase computational time significantly. We call the parameter $P'$ with
 $d_{AB}$ in the place of $\rho_{AB}$ ``improved narrowness''. The following
 relation always holds: $0 < P \le P' \le 1$.
 \begin{figure}
