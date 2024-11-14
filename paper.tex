@@ -146,7 +146,7 @@ obtain a parameter $P$:
 \end{equation*}
 
 Substituting \cref{eq:pre-awesomeness} and \cref{eq:intro} we get a new pore
-shape parameter we call ``\highlight{awesomeness}'':
+shape parameter we call ``narrowness'':
 \begin{equation}
   \begin{aligned}
     P &= \frac{\pi [3(1+E) - \sqrt{(3E+1)(E+3)}]}{4E} \times \\
@@ -161,15 +161,15 @@ the length of a path (the shortest one) between $A$ and $B$ along the boundary.
 
 \section{Computational algorithm}
 \label{seq:alg}
-Our algorithm for calculating \highlight{awesomeness} is quite simple. It
-assumes that an image of a pore is made with sufficient resolution, so we can
-use boundary pixels without any additional processing. The main algorithm
-consists of three parts and is shown in \cref{alg:main}.
+Our algorithm for calculating narrowness is quite simple. It assumes that an
+image of a pore is made with sufficient resolution, so we can use boundary
+pixels without any additional processing. The main algorithm consists of three
+parts and is shown in \cref{alg:main}.
 \begin{algorithm}[H]
-  \caption{Algorithm for computation of \highlight{awesomeness} of a pore.}
+  \caption{Algorithm for computation of narrowness of a pore.}
   \label{alg:main}
   \begin{algorithmic}[1]
-    \Procedure{\texttt{awesomeness}}{\texttt{img}}
+    \Procedure{\texttt{narrowness}}{\texttt{img}}
     \State \texttt{bs $\gets$ boundary(img)}
     \Comment Construct a list of boundary points (\cref{alg:extraction}).
     \State \texttt{\%bs $\gets$ sort(bs)}
@@ -328,7 +328,8 @@ example, an image is taken with bad resolution (i.e. pores consist only of a few
 pixels) some quality improving techniques must be applied first. It also
 exploits the commutative property $p_{AB} = p_{BA}$.
 \begin{algorithm}[H]
-  \caption{The last step of the algorithm for awesomeness: the function \texttt{pmin}.}
+  \caption{The last step of the algorithm for narrowness: the function
+    \texttt{pmin}.}
   \label{alg:pmin}
   \begin{algorithmic}[1]
     \Procedure{\texttt{pairwise\_distances}}{\texttt{points}}
@@ -388,15 +389,15 @@ clusterization, as can be seen in the next section.
 \begin{figure}
   \centering
   \includegraphics[width=0.9\linewidth]{images/rotation-resize.png}
-  \caption[]{\highlight{Awesomeness} parameter for the same image under rotation
-  (red X marks) and resize (blue dot marks) transforms.}
+  \caption[]{Narrowness parameter for the same image under rotation (red X
+    marks) and resize (blue dot marks) transforms.}
   \label{fig:rotation-resize}
 \end{figure}
 
 \section{Results}
-We computed \highlight{awesomeness} for 4000 synthetically generated images with
-dimensions $1000 \times 1000$ pixels (1000 images from 4 different
-datasets). The datasets have the following properties:
+We computed narrowness for 4000 synthetically generated images with dimensions
+$1000 \times 1000$ pixels (1000 images from 4 different datasets). The datasets
+have the following properties:
 \begin{itemize}
 \item \texttt{normal}: ``Normal'' pores with convexity $0.5-0.8$.
 \item \texttt{mnist}: Pores which resemble digits (still being 1-connected).
@@ -416,19 +417,17 @@ Figure \ref{fig:pores} depicts a pore from each dataset.
     \includegraphics[width=0.4\linewidth,frame]{images/mnist.png}}
   \subfigure[\texttt{mostlyconvex}]{
     \includegraphics[width=0.4\linewidth,frame]{images/mostlyconvex.png}}
-  \caption[]{One pore from each dataset used for calculation of
-    \texttt{awesomeness}.}
+  \caption[]{One pore from each dataset used for calculation of narrowness.}
   \label{fig:pores}
 \end{figure}
 
 Summarly 3901 images out of 4000 (97.5\%) were good enough for \texttt{sort} to
 sort boundary points in pores. For these images we also computed commonly used
 convexity and elongation parameters. On \cref{fig:cae-space} each pore is
-represented as a dot in convexity-elongation-\highlight{awesomeness} (CEA)
-space.
+represented as a dot in convexity-elongation-narrowness (CEN) space.
 \begin{figure*}
   \centering
-  \subfigure[Convexity-elongation-\highlight{awesomeness} space]{
+  \subfigure[Convexity-elongation-narrowness space]{
     \includegraphics[width=0.4\linewidth]{images/cae.png}
     \label{fig:cae-space}}
   \hfill
@@ -436,7 +435,7 @@ space.
     \includegraphics[width=0.4\linewidth]{images/cer.png}
     \label{fig:cer-space}}
   \vskip\baselineskip
-  \subfigure[Elongation-\highlight{Correlated awesomeness} space]{
+  \subfigure[Elongation-Correlated narrowness space]{
     \includegraphics[width=0.4\linewidth]{images/ae.png}
     \label{fig:ae-space}}
   \caption[]{Synthetically generated pores shown as points in different
@@ -444,29 +443,27 @@ space.
   \label{fig:parameter-spaces}
 \end{figure*}
 
-It can be seen that if a pore has low convexity ($< 0.6$)
-\highlight{awesomeness} adds no information to the pore's descriptors because it
-stays relatively low for all pores. When, however, the convexity is high it adds
-a new dimension to the parameter space.
+It can be seen that if a pore has low convexity ($< 0.6$) narrowness adds no
+information to the pore's descriptors because it stays relatively low for all
+pores. When, however, the convexity is high it adds a new dimension to the
+parameter space.
 
 Another common parameter for describing pore shapes is roundness. Figure
-\ref{fig:cer-space} features convexity-elongation-roundness (CER) space.
-It can be seen that roundness-convexity correlation is bigger than
-awesomeness-convexity correlation. All correlation values are in
-\cref{tab:correlations}.
+\ref{fig:cer-space} features convexity-elongation-roundness (CER) space. It can
+be seen that roundness-convexity correlation is bigger than narrowness-convexity
+correlation. All correlation values are in \cref{tab:correlations}.
 
 On \cref{fig:ae-space} pores are shown in $p-E$ space where $p$ is a
-``correlated'' \highlight{awesomeness} parameter \cref{eq:pre-awesomeness}. It
-shows that our assumption on the maximal value of \highlight{awesomeness} is
-correct indeed.
+``correlated'' narrowness parameter \cref{eq:pre-awesomeness}. It shows that our
+assumption on the maximal value of narrowness is correct indeed.
 
 \begin{table*}[!htp]
   \centering
   \begin{tabular}{|c|c|c|c|c|}
     \hline
-    & Awesomeness & Elongation & Convexity & Roundness \\
+    & Narrowness & Elongation & Convexity & Roundness \\
     \hline
-    Awesomeness & 1 & 0.106 & 0.611 & 0.0.800 \\
+    Narrowness & 1 & 0.106 & 0.611 & 0.0.800 \\
     \hline
     Elongation & & 1 & 0.457 & 0.355 \\
     \hline
@@ -479,22 +476,21 @@ correct indeed.
   \label{tab:correlations}
 \end{table*}
 
-To test abilities of the awesomeness parameter we now divide our pores in groups
-with different convexity. The first group has pores with convexity $0.55 \le C < 0.65$,
-the second -- $0.65 \le C < 0.75$, the third -- $0.75 \le C < 0.85$ and the fourth
--- $0.85 \le C < 0.95$. Five images with the biggest awesomeness and five images
-with the smallest awesomeness from each group are shown on
-\cref{fig:convexity-groups-score}. It can be clearly seen that pores with higher
-values of \highlight{awesomeness} are more ``solid'' and more finely
+To test abilities of the narrowness parameter we now divide our pores in groups
+with different convexity. The first group has pores with convexity
+$0.55 \le C < 0.65$, the second -- $0.65 \le C < 0.75$, the third --
+$0.75 \le C < 0.85$ and the fourth -- $0.85 \le C < 0.95$. Five images with the
+biggest narrowness and five images with the smallest narrowness from each group
+are shown on \cref{fig:convexity-groups-score}. It can be clearly seen that
+pores with higher values of narrowness are more ``solid'' and more finely
 clusterized.
 
 For comparison, we do the same sorting across groups for roundness
 parameter. The results are on
 \cref{fig:convexity-groups-roundness}. Well-clusterized pores have the biggest
 roundness for convexity $C > 0.8$. For lower convexity, however, even pores with
-the biggest roundness in the group are also underclusterized while
-\highlight{awesomeness} parameter is capable of separating well-clusterized and
-underclusterized pores.
+the biggest roundness in the group are also underclusterized while narrowness
+parameter is capable of separating well-clusterized and underclusterized pores.
 \begin{figure*}
   \centering
   \subfigure[$0.55 \le C < 0.65$]{
@@ -511,8 +507,8 @@ underclusterized pores.
     \includegraphics[width=0.4\linewidth]{images/groups-score-0.90.png}
     \label{fig:small-blob}}
   \caption[]{Pores divided into groups by their convexity. Upper row of each
-    subfigure: pores with minimal \highlight{awesomeness} in the group, lower
-    row: pores with maximal \highlight{awesomeness} in the group.}
+    subfigure: pores with minimal narrowness in the group, lower row: pores with
+    maximal narrowness in the group.}
   \label{fig:convexity-groups-score}
 \end{figure*}
 
@@ -541,7 +537,7 @@ clusterization (see \cref{tab:ranges}).
   \centering
   \begin{tabular}{|c|c|}
     \hline
-    \highlight{Awesomeness} & Comment \\
+    \highlight{Narrowness} & Comment \\
     \hline
     < 0.1 & Virtually many different pores connected by thin chords \\
     \hline
@@ -550,7 +546,7 @@ clusterization (see \cref{tab:ranges}).
     > 0.6 & Well-clusterized pores \\
     \hline
   \end{tabular}
-  \caption{Different values of \highlight{awesomeness} and their meaning.}
+  \caption{Different values of narrowness and their meaning.}
   \label{tab:ranges}
 \end{table*}
 
@@ -576,8 +572,8 @@ Flaws of this parameter include:
   \end{itemize}
   In this case the two points definitely cannot form a bottleneck.
 \item C-shaped pores with a small gap, like the pore on the left-top of
-  \cref{fig:small-gap} always have small \highlight{awesomeness}, even if they
-  are otherwise clusterized correctly.
+  \cref{fig:small-gap} always have small narrowness, even if they are otherwise
+  clusterized correctly.
 \end{itemize}
 
 The first flaw can be dealt with by replacing the Euclidean distance $\rho_{AB}$
@@ -585,22 +581,21 @@ in \cref{eq:intro} with the length $d_{AB}$ of the shortest path between points
 which does not cross the pore's boundary (see \cref{fig:improved}). Although the
 resulting algorithm will have the same $O(n^2)$ complexity, doing so can
 increase computational time significantly. We call the parameter $P'$ with
-$d_{AB}$ in the place of $\rho_{AB}$ ``improved awesomeness''. The following
+$d_{AB}$ in the place of $\rho_{AB}$ ``improved narrowness''. The following
 relation always holds: $0 < P \le P' \le 1$.
 \begin{figure}
   \centering
   \includegraphics[width=0.9\linewidth,frame]{images/improved.png}
-  \caption[]{Pairs of points responsible for \highlight{awesomeness} (red) and
-    improved \highlight{awesomeness} (green).}
+  \caption[]{Pairs of points responsible for narrowness (red) and improved
+    narrowness (green).}
   \label{fig:improved}
 \end{figure}
 
-We present an opensource solution for calculating \highlight{awesomeness} and
-improved \highlight{awesomeness}. \highlight{E-mail us and buy us coffee so we
-  can send this super program to you, no matter where you live! Hurry, this is a
-limited offer!} An average time for calculating \highlight{awesomeness} is 1
-second for a $1000 \times 1000$ png image and is $1-60$ seconds for calculating
-improved \highlight{awesomeness}.
+We present an opensource solution for calculating narrowness and improved
+narrowness. \highlight{E-mail us and buy us coffee so we can send this super
+  program to you, no matter where you live! Hurry, this is a limited offer!} An
+average time for calculating narrowness is 1 second for a $1000 \times 1000$ png
+image and is $1-60$ seconds for calculating improved narrowness.
 
 \bibliography{paper}
 \end{document}
